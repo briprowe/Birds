@@ -44,8 +44,8 @@ public class Bird implements Steppable {
     public void step(final SimState state) {
 	ec.util.MersenneTwisterFast random = state.random;
 	
-	double dx = nextDouble();
-	double dy = nextDouble();
+	double dx = random.nextDouble();
+	double dy = random.nextDouble();
 
 	if( random.nextBoolean() ) dx += pos.getX(); else dx = pos.getX() - dx;
 	if( random.nextBoolean() ) dy += pos.getY(); else dy = pos.getY() - dy;
