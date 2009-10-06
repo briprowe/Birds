@@ -22,11 +22,13 @@ public class BirdsModel extends SimState {
     public BirdsModel(long seed) { super(seed); instance = this; }
     public BirdsModel(long seed, int width, int height, int count) {
 	super(seed);
+
+	instance = this;
     }
 
     public static BirdsModel getInstance() { 
 	if (instance == null) { 
-	    instance = new BirdsModel(1);
+	    instance = new BirdsModel(System.currentTimeMillis());
 	}
 
 	return instance;
@@ -59,6 +61,10 @@ public class BirdsModel extends SimState {
 	}
 
 	schedule.scheduleRepeating(new RandomSequence(birds));
+    }
+
+    public double visibility(Double2D pos) {
+	return pos.x / WORLD_SIZE_X;
     }
 
     public static void main(String[] args) {
