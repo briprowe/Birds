@@ -47,8 +47,8 @@ public class Bird implements Steppable {
 	double dx = nextDouble();
 	double dy = nextDouble();
 
-	if( random.nextBoolean() ) dx += pos.getX(); else dx -= pos.getX();
-	if( random.nextBoolean() ) dy += pos.getY(); else dy -= pos.getY();
+	if( random.nextBoolean() ) dx += pos.getX(); else dx = pos.getX() - dx;
+	if( random.nextBoolean() ) dy += pos.getY(); else dy = pos.getY() - dy;
 
 	Double2D p = new Double2D(dx, dy);
 	this.setPos(p);
