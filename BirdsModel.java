@@ -19,7 +19,8 @@ public class BirdsModel extends SimState {
     public static int NUM_BIRDS = 300;
     // The standard signal radius is 100 meters. Since the world is scaled down by
     // a factor of 100: 
-    public static double STD_SIGNAL_RADIUS = 8;
+    public static double STD_SIGNAL_RADIUS = 1;
+    public static int    SEASON_LENGTH     = 50;
 
     private static BirdsModel instance;
 
@@ -41,12 +42,16 @@ public class BirdsModel extends SimState {
     public String getName() { return "Birds"; }
 
     private Bird[] birds;
+    private Season season;
+
     private Continuous2D bird_grid;
     
     public Continuous2D getWorld() { return bird_grid; }
 
     public void start() {
 	super.start();
+
+	season = new Season();
 
 	bird_grid = new Continuous2D(1, WORLD_SIZE_X, WORLD_SIZE_Y);
 	//bird_grid = new Continuous2D(10, 400, 400);
@@ -65,6 +70,7 @@ public class BirdsModel extends SimState {
 	}
 
 	schedule.scheduleRepeating(new RandomSequence(birds));
+	schedule.scheduleRepeating(new MultiStep(season, SEASON_LENGTH, true));
     }
 
     public double visibility(Double2D pos) {

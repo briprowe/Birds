@@ -63,9 +63,7 @@ public class Bird implements Steppable {
 		double current_time = state.schedule.getTime();
 		state.schedule.scheduleOnce(current_time, s);
 	    }
-		
-	
-	//System.out.println("Stepping: " + id + "\tPos: (" + pos.getX() + ", " + pos.getY() + ")\tGender: " + gender);
+
     }
 
 }
