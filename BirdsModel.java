@@ -54,7 +54,6 @@ public class BirdsModel extends SimState {
 	season = new Season();
 
 	bird_grid = new Continuous2D(1, WORLD_SIZE_X, WORLD_SIZE_Y);
-	//bird_grid = new Continuous2D(10, 400, 400);
 	birds = new Bird[NUM_BIRDS];
 
 	for( int i = 0; i < NUM_BIRDS; i++ ) {
