@@ -5,6 +5,7 @@ import sim.field.continuous.*;
 import sim.util.*;
 
 public class BirdsModel extends SimState {
+    // The standard world size is 62.5x62.5 km^2
     public static double WORLD_SIZE_X = 625.00 / 2.0;
     public static double WORLD_SIZE_Y = 625.00 / 2.0;
 
@@ -16,6 +17,9 @@ public class BirdsModel extends SimState {
 
     //public static int NUM_BIRDS = 300000 / 2 / 2;
     public static int NUM_BIRDS = 300;
+    // The standard signal radius is 100 meters. Since the world is scaled down by
+    // a factor of 100: 
+    public static double STD_SIGNAL_RADIUS = 8;
 
     private static BirdsModel instance;
 
@@ -44,7 +48,7 @@ public class BirdsModel extends SimState {
     public void start() {
 	super.start();
 
-	bird_grid = new Continuous2D(100, WORLD_SIZE_X, WORLD_SIZE_Y);
+	bird_grid = new Continuous2D(1, WORLD_SIZE_X, WORLD_SIZE_Y);
 	//bird_grid = new Continuous2D(10, 400, 400);
 	birds = new Bird[NUM_BIRDS];
 
