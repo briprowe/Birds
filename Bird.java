@@ -43,7 +43,9 @@ public class Bird implements Steppable {
 
     public void step(final SimState state) {
 	ec.util.MersenneTwisterFast random = state.random;
-	
+
+	double visibility = ((BirdsModel)state).visibility(pos);
+
 	double dx = random.nextDouble();
 	double dy = random.nextDouble();
 
@@ -53,6 +55,16 @@ public class Bird implements Steppable {
 	Double2D p = new Double2D(dx, dy);
 	this.setPos(p);
 
+	// Should we signal?
+	if( random.nextBoolean() && gender == MALE )
+	    if( visibility >= strategy ) {
+		Signal s = new Signal(this, pos, visibility);
+		
+		double current_time = state.schedule.getTime();
+		state.schedule.scheduleOnce(current_time, s);
+	    }
+		
+	
 	//System.out.println("Stepping: " + id + "\tPos: (" + pos.getX() + ", " + pos.getY() + ")\tGender: " + gender);
     }
 
