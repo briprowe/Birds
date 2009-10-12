@@ -42,8 +42,14 @@ public class Bird implements Steppable {
     }
 
     public void respond(Signal sig) {
-	if( gender == FEMALE )
-	    System.out.println("Responding");
+	if( gender == FEMALE ) {
+	    // Maybe mate? For the time being always mate.
+	    Mating m = new Mating(sig.getSignaller(), this, pos);
+	    
+	    Season s = BirdsModel.getInstance().getSeason();
+
+	    s.addMating(m);
+	}
     }
 
     public void step(final SimState state) {
