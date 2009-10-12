@@ -1,5 +1,8 @@
 package sim.app.birds;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import sim.util.*;
 import sim.engine.*;
 import sim.field.continuous.Continuous2D;
@@ -34,5 +37,30 @@ public class Signal implements Steppable {
 
 	sim.util.Bag birds = world.getObjectsWithinDistance(pos, this.getRange());
 	System.out.println("Num birds in range: " + birds.size());
+
+	Iterator iter = birds.iterator();
+
+	try {
+	    Bird b = (Bird)iter.next();
+	    while( b != null ) {
+		if( b != signaller ) 
+		    b.respond(this);
+
+		b = (Bird)iter.next();
+	    }
+	} catch( NoSuchElementException e ) {
+
+	}
+	// Bird[] b = (Bird[])birds.toArray(new Bird[0]);
+
+	// try { 
+	//     for(int i = 0; i < b.length; i++)
+	// 	if( b[i] != signaller )
+	// 	    b[i].respond(this);
+	// } catch( NullPointerException e ) {
+	//     System.out.println("Null pointer");
+	// }
+
+	
     }
 }
