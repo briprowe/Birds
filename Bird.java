@@ -41,6 +41,11 @@ public class Bird implements Steppable {
 	return pos;
     }
 
+    public void respond(Signal sig) {
+	if( gender == FEMALE )
+	    System.out.println("Responding");
+    }
+
     public void step(final SimState state) {
 	ec.util.MersenneTwisterFast random = state.random;
 
