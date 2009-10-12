@@ -9,9 +9,6 @@ public class BirdsModel extends SimState {
     public static double WORLD_SIZE_X = 625.00 / 2.0;
     public static double WORLD_SIZE_Y = 625.00 / 2.0;
 
-//     public static int DISPLAY_SIZE_X = 312;
-//     public static int DISPLAY_SIZE_Y = 312;
-
     public static double DISPLAY_SIZE_X = WORLD_SIZE_X * 20;
     public static double DISPLAY_SIZE_Y = WORLD_SIZE_X * 20;
 
@@ -46,7 +43,8 @@ public class BirdsModel extends SimState {
 
     private Continuous2D bird_grid;
     
-    public Continuous2D getWorld() { return bird_grid; }
+    public Continuous2D getWorld()  { return bird_grid; }
+    public Season       getSeason() { return season; }
 
     public void start() {
 	super.start();
