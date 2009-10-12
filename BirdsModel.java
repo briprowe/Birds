@@ -62,7 +62,6 @@ public class BirdsModel extends SimState {
 	    
 	    birds[i].setPos(pos);
 
-	    bird_grid.setObjectLocation(birds[i], birds[i].getPos());
 					
 	}
 
