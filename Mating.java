@@ -14,5 +14,5 @@ public class Mating {
 	this.male = m; this.female = f; this.pos = p;
     }
 
-    
+    public Double2D getPosition() { return pos; }
 }
