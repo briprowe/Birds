@@ -22,6 +22,8 @@ public class Bird implements Steppable {
 	id = i;
 
 	gender = BirdsModel.getInstance().random.nextBoolean();
+	
+	pregnant = false;
     }
 
     public void setAge(int a) { age = a; }
@@ -42,13 +44,14 @@ public class Bird implements Steppable {
     }
 
     public void respond(Signal sig) {
-	if( gender == FEMALE ) {
+	if( gender == FEMALE && pregnant == false ) {
 	    // Maybe mate? For the time being always mate.
 	    Mating m = new Mating(sig.getSignaller(), this, pos);
 	    
 	    Season s = BirdsModel.getInstance().getSeason();
 
 	    s.addMating(m);
+	    pregnant = true;
 	}
     }
 
