@@ -4,6 +4,8 @@ import sim.engine.*;
 import sim.field.continuous.*;
 import sim.util.*;
 
+import java.util.*;
+
 public class BirdsModel extends SimState {
     // The standard world size is 62.5x62.5 km^2
     public static double WORLD_SIZE_X = 625.00 / 2.0;
@@ -46,6 +48,10 @@ public class BirdsModel extends SimState {
     public Continuous2D getWorld()  { return bird_grid; }
     public Season       getSeason() { return season; }
 
+    public void reschedule(LinkedList<Bird> b) {
+
+    }
+
     public void start() {
 	super.start();
 
@@ -62,7 +68,6 @@ public class BirdsModel extends SimState {
 	    
 	    birds[i].setPos(pos);
 
-					
 	}
 
 	schedule.scheduleRepeating(new RandomSequence(birds));
