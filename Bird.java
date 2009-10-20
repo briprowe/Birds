@@ -18,11 +18,21 @@ public class Bird implements Steppable {
     private int id;
     private Double2D pos;
 
+    public Bird() {
+	ec.util.MersenneTwisterFast random = BirdsModel.getInstance().random;
+
+	id = random.nextInt();
+	gender = random.nextBoolean();
+	pregnant = false;
+	age = 0;
+    }
+
     public Bird(int i) { 
 	id = i;
 
 	gender = BirdsModel.getInstance().random.nextBoolean();
-	
+	age = 0;
+
 	pregnant = false;
     }
 
@@ -41,6 +51,10 @@ public class Bird implements Steppable {
 
     public Double2D getPos() {
 	return pos;
+    }
+
+    public void setPregnant(boolean val) {
+	pregnant = val;
     }
 
     public void respond(Signal sig) {
@@ -78,6 +92,7 @@ public class Bird implements Steppable {
 		state.schedule.scheduleOnce(current_time, s);
 	    }
 
+	age++;
     }
 
 }
