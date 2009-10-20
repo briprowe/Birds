@@ -15,4 +15,7 @@ public class Mating {
     }
 
     public Double2D getPosition() { return pos; }
+
+    public Bird getMale()   { return male; }
+    public Bird getFemale() { return female; }
 }
