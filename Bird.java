@@ -92,7 +92,6 @@ public class Bird implements Steppable {
 		state.schedule.scheduleOnce(current_time, s);
 	    }
 
-	age++;
     }
 
 }
