@@ -40,16 +40,20 @@ public class BirdsModel extends SimState {
 
     public String getName() { return "Birds"; }
 
-    private Bird[] birds;
     private Season season;
 
+    private Stoppable scheduled_birds;
     private Continuous2D bird_grid;
     
     public Continuous2D getWorld()  { return bird_grid; }
     public Season       getSeason() { return season; }
 
     public void reschedule(LinkedList<Bird> b) {
+	scheduled_birds.stop();
 
+	Bird[] birds = b.toArray(new Bird[0]);
+	scheduled_birds = schedule.scheduleRepeating(new RandomSequence(birds));
+	
     }
 
     public void start() {
@@ -58,7 +62,7 @@ public class BirdsModel extends SimState {
 	season = new Season();
 
 	bird_grid = new Continuous2D(1, WORLD_SIZE_X, WORLD_SIZE_Y);
-	birds = new Bird[NUM_BIRDS];
+	Bird[] birds = new Bird[NUM_BIRDS];
 
 	for( int i = 0; i < NUM_BIRDS; i++ ) {
 	    birds[i] = new Bird(i);
@@ -70,7 +74,7 @@ public class BirdsModel extends SimState {
 
 	}
 
-	schedule.scheduleRepeating(new RandomSequence(birds));
+	scheduled_birds = schedule.scheduleRepeating(new RandomSequence(birds));
 	schedule.scheduleRepeating(new MultiStep(season, SEASON_LENGTH, true));
     }
 
