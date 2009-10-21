@@ -57,7 +57,7 @@ public class Bird implements Steppable {
 	pregnant = val;
     }
 
-    public void respond(Signal sig) {
+    public boolean respond(Signal sig) {
 	if( gender == FEMALE && pregnant == false ) {
 	    // Maybe mate? For the time being always mate.
 	    Mating m = new Mating(sig.getSignaller(), this, pos);
@@ -66,7 +66,11 @@ public class Bird implements Steppable {
 
 	    s.addMating(m);
 	    pregnant = true;
+	    
+	    return true;
 	}
+
+	return false;
     }
 
     public void step(final SimState state) {

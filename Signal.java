@@ -43,7 +43,9 @@ public class Signal implements Steppable {
 	    Bird b = (Bird)iter.next();
 	    while( b != null ) {
 		if( b != signaller ) 
-		    b.respond(this);
+		    if( b.respond(this) )
+			// Only 1 response per signal.
+			break;
 
 		b = (Bird)iter.next();
 	    }
