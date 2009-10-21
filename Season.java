@@ -23,12 +23,19 @@ public class Season implements Steppable {
 
 	// Cull the dead
 	LinkedList<Bird> survivors = cull(birds);
-
+	
 	// Create the list of offspring
 	LinkedList<Bird> young = doBirths();
 
+	System.out.println("Num Survivors: " + survivors.size() + " Num Young: " + young.size());
+
 	// Put the next generation of birds into the scheduler and the world
-	((BirdsModel)state).reschedule(new LinkedList<Bird>(survivors, young));
+	//((BirdsModel)state).reschedule(new LinkedList<Bird>(survivors, young));
+
+	// Nasty, because it makes use of side-effects, but this list is only visible in this 
+	// function.
+	young.addAll(survivors);
+	((BirdsModel)state).reschedule(young);
 	
 	// Create a new list of matings for the next season.
 	matings = new LinkedList<Mating>();
@@ -72,12 +79,18 @@ public class Season implements Steppable {
 	try {
 	    Bird b = (Bird)iter.next();
 	    while( b != null ) {
-		retval.add(b);
+		int a = b.getAge();
+		if( a < 2 ) {
+		    b.setAge(1 + a);
+		    retval.add(b);
+		}
 
 		b = (Bird)iter.next();
 	    }
 	} catch( NoSuchElementException e ) {
 
 	}
+
+	return retval;
     }
 }
