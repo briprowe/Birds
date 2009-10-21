@@ -36,7 +36,6 @@ public class Signal implements Steppable {
 	Continuous2D world = ((BirdsModel)state).getWorld();
 
 	sim.util.Bag birds = world.getObjectsWithinDistance(pos, this.getRange());
-	System.out.println("Num birds in range: " + birds.size());
 
 	Iterator iter = birds.iterator();
 
