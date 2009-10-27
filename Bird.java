@@ -36,10 +36,21 @@ public class Bird implements Steppable {
 	pregnant = false;
     }
 
+    public Bird(Bird mother, Bird father) {
+	ec.util.MersenneTwisterFast random = BirdsModel.getInstance().random;
+
+	gender = random.nextBoolean();
+	pregnant = false;
+	age = 0;
+
+	strategy = (mother.strategy + father.strategy) / 2;
+    }
+
     public void setAge(int a) { age = a; }
     public int getAge() { return age; }
 
     public boolean getGender() { return gender; }
+    public float   getStrategy() { return strategy; }
 
     public void setPos(Double2D p) {
 	sim.field.continuous.Continuous2D world = BirdsModel.getInstance().getWorld();
@@ -77,6 +88,7 @@ public class Bird implements Steppable {
 	ec.util.MersenneTwisterFast random = state.random;
 
 	double visibility = ((BirdsModel)state).visibility(pos);
+	double audRange   = ((BirdsModel)state).audRange(pos);
 
 	double dx = random.nextDouble();
 	double dy = random.nextDouble();

@@ -49,18 +49,20 @@ public class Season implements Steppable {
 	try {
 	    Mating m = (Mating)iter.next();
 	    while( m != null ) {
+		Bird mom = m.getFemale();
+		Bird dad = m.getMale();
+
 		// Two offspring per mating 
-		Bird b1 = new Bird();
+		Bird b1 = new Bird(mom, dad);
 		b1.setAge(0);
 		b1.setPos(m.getPosition());
 
-		Bird b2 = new Bird();
+		Bird b2 = new Bird(mom, dad);
 		b2.setAge(0);
 		b2.setPos(m.getPosition());
 		
 		young.add(b1); young.add(b2);
 		
-		Bird mom = m.getFemale();
 		mom.setPregnant(false);
 
 		m = (Mating)iter.next();
