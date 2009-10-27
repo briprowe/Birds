@@ -24,13 +24,18 @@ public class Bird implements Steppable {
 	id = random.nextInt();
 	gender = random.nextBoolean();
 	pregnant = false;
+
+	strategy = random.nextFloat();
 	age = 0;
     }
 
     public Bird(int i) { 
+	ec.util.MersenneTwisterFast random = BirdsModel.getInstance().random;
 	id = i;
 
-	gender = BirdsModel.getInstance().random.nextBoolean();
+	gender = random.nextBoolean();
+
+	strategy = random.nextFloat();
 	age = 0;
 
 	pregnant = false;
@@ -44,6 +49,7 @@ public class Bird implements Steppable {
 	age = 0;
 
 	strategy = (mother.strategy + father.strategy) / 2;
+
     }
 
     public void setAge(int a) { age = a; }
@@ -100,13 +106,21 @@ public class Bird implements Steppable {
 	this.setPos(p);
 
 	// Should we signal?
-	if( random.nextBoolean() && gender == MALE )
+	if( random.nextBoolean() && gender == MALE ) {
 	    if( visibility >= strategy ) {
+		System.out.println("Signalling (Visually) - Vis: " + visibility + " Aud: " + audRange + " X: " + p.getX());
 		Signal s = new Signal(this, pos, visibility);
 		
 		double current_time = state.schedule.getTime();
 		state.schedule.scheduleOnce(current_time, s);
+	    } else if( audRange >= (1 - strategy) ) {
+		System.out.println("Signalling (Audibly) - Vis: " + visibility + " Aud: " + audRange + " X: " + p.getX());
+		Signal s = new Signal(this, pos, audRange);
+		
+		double current_time = state.schedule.getTime();
+		state.schedule.scheduleOnce(current_time, s);
 	    }
+	}
 
     }
 

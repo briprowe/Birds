@@ -82,6 +82,10 @@ public class BirdsModel extends SimState {
 	return pos.x / WORLD_SIZE_X;
     }
 
+    public double audRange(Double2D pos) {
+	return 1 - visibility(pos);
+    }
+
     public static void main(String[] args) {
 
 	doLoop(BirdsModel.class, args);
