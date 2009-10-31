@@ -9,15 +9,16 @@ import java.util.*;
 public class Season implements Steppable {
     
     private LinkedList<Mating> matings;
-    
-    public Season() { matings = new LinkedList<Mating>(); }
+    private int n;
+
+    public Season() { matings = new LinkedList<Mating>(); n = 0; }
 
     public void addMating(Mating m) {
 	matings.add(m);
     }
 
     public void step(SimState state) {
-	System.out.println("Season stepping: " + state.schedule.getTimestamp("", "") + " Num Matings: " + matings.size());
+	System.out.println("Season stepping: " + n++ + " Num Matings: " + matings.size());
 	Continuous2D world = ((BirdsModel)state).getWorld();
 	Bag birds = world.clear();
 
@@ -28,7 +29,7 @@ public class Season implements Steppable {
 	LinkedList<Bird> young = doBirths();
 
 	System.out.println("Num Survivors: " + survivors.size() + " Num Young: " + young.size());
-
+	
 	// Put the next generation of birds into the scheduler and the world
 	//((BirdsModel)state).reschedule(new LinkedList<Bird>(survivors, young));
 
@@ -36,6 +37,8 @@ public class Season implements Steppable {
 	// function.
 	young.addAll(survivors);
 	((BirdsModel)state).reschedule(young);
+
+	output(young);
 	
 	// Create a new list of matings for the next season.
 	matings = new LinkedList<Mating>();
@@ -94,5 +97,21 @@ public class Season implements Steppable {
 	}
 
 	return retval;
+    }
+
+    private void output(LinkedList<Bird> birds) {
+	Iterator iter = birds.iterator();
+
+	try {
+	    Bird b = (Bird)iter.next();
+	    while( b != null ) {
+		System.out.println("Strat: " + b.getStrategy() + " Pos: " + b.getPos().getX());
+
+		b = (Bird)iter.next();
+	    }
+	} catch( NoSuchElementException e ) {
+
+	}
+
     }
 }
