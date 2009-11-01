@@ -7,6 +7,10 @@ import sim.util.*;
 import java.util.*;
 
 public class BirdsModel extends SimState {
+    //////////////////////////////////////////
+    // Model parameters begin here
+    //////////////////////////////////////////
+
     // The standard world size is 62.5x62.5 km^2
     public static double WORLD_SIZE_X = 625.00 / 2.0;
     public static double WORLD_SIZE_Y = 625.00 / 2.0;
@@ -21,6 +25,17 @@ public class BirdsModel extends SimState {
     public static double STD_SIGNAL_RADIUS = 1;
     public static int    SEASON_LENGTH     = 50;
 
+    //////////////////////////////////////////
+    // Model elements begin here
+    //////////////////////////////////////////
+
+    private Season season;
+
+    private Stoppable scheduled_birds;
+    private Continuous2D bird_grid;
+    private Energy       energy_grid;
+
+    
     private static BirdsModel instance;
 
     public BirdsModel(long seed) { super(seed); instance = this; }
@@ -39,11 +54,6 @@ public class BirdsModel extends SimState {
     }
 
     public String getName() { return "Birds"; }
-
-    private Season season;
-
-    private Stoppable scheduled_birds;
-    private Continuous2D bird_grid;
     
     public Continuous2D getWorld()  { return bird_grid; }
     public Season       getSeason() { return season; }
