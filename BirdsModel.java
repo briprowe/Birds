@@ -25,6 +25,11 @@ public class BirdsModel extends SimState {
     public static double STD_SIGNAL_RADIUS = 1;
     public static int    SEASON_LENGTH     = 50;
 
+    public static double INITIAL_ENERGY     = 2;
+    public static double UPPER_ENERGY_BOUND = 10;
+    public static double LOWER_ENERGY_BOUND = 0;
+    public static double ENERGY_GAIN        = 1;
+
     //////////////////////////////////////////
     // Model elements begin here
     //////////////////////////////////////////
@@ -57,6 +62,7 @@ public class BirdsModel extends SimState {
     
     public Continuous2D getWorld()  { return bird_grid; }
     public Season       getSeason() { return season; }
+    public Energy       getEnergy() { return energy_grid; }
 
     public void reschedule(LinkedList<Bird> b) {
 	scheduled_birds.stop();
@@ -83,8 +89,14 @@ public class BirdsModel extends SimState {
 	    birds[i].setPos(pos);
 
 	}
+	
+	energy_grid = new Energy(new Double2D(0,0), WORLD_SIZE_X, WORLD_SIZE_Y, 
+				 (int)Math.ceil(WORLD_SIZE_X), (int)Math.ceil(WORLD_SIZE_Y), INITIAL_ENERGY);
+	energy_grid.setBounds(UPPER_ENERGY_BOUND, LOWER_ENERGY_BOUND);
+	energy_grid.setEnergyGain(ENERGY_GAIN);
 
 	scheduled_birds = schedule.scheduleRepeating(new RandomSequence(birds));
+	schedule.scheduleRepeating(energy_grid);
 	schedule.scheduleRepeating(new MultiStep(season, SEASON_LENGTH, true));
     }
 

@@ -44,6 +44,7 @@ class Energy implements Steppable {
     }
     
     public void step(final SimState state) {
+	System.out.println("Energy step");
 	values.add(delta_energy);
     }
 
@@ -54,16 +55,22 @@ class Energy implements Steppable {
 	x -= location.getX();
 	y -= location.getY();
 
-	x /= width;
-	y /= height;
+	x = num_cells_horiz * x / width;
+	y = num_cells_vert * y / height;
 
 	return new Double2D(x,y);
     }
 
     public double get(Double2D pos) {
-	Double2D p = transform(pos);
-	
-	return values.get((int)Math.floor(p.getX()), (int)Math.floor(p.getY()));
+	try {
+	    Double2D p = transform(pos);
+
+	    System.out.println("Getting Pos: " + pos + " Transformed: " + p);
+
+	    return values.get((int)Math.floor(p.getX()), (int)Math.floor(p.getY()));
+	} catch( ArrayIndexOutOfBoundsException e ) {
+	    return 0;
+	}
     }
 
     public void set(Double2D pos, double val) {
